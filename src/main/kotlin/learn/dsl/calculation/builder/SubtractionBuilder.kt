@@ -1,8 +1,10 @@
 package learn.dsl.calculation.builder
 
+import learn.dsl.calculation.CalculateDsl
 import learn.dsl.calculation.model.operation.Subtraction
 
 
+@CalculateDsl
 class SubtractionBuilder {
 
     var minuend: Double = 0.0

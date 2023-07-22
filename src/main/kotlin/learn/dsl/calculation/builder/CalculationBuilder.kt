@@ -1,8 +1,10 @@
 package learn.dsl.calculation.builder
 
+import learn.dsl.calculation.CalculateDsl
 import learn.dsl.calculation.model.Calculation
 import learn.dsl.calculation.model.operation.CalcOperation
 
+@CalculateDsl
 class CalculationBuilder {
 
 

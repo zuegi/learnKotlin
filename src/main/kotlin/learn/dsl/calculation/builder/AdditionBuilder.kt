@@ -1,7 +1,10 @@
 package learn.dsl.calculation.builder
 
+import learn.dsl.calculation.CalculateDsl
 import learn.dsl.calculation.model.operation.Addition
 
+
+@CalculateDsl
 class AdditionBuilder {
 
     var summand1: Double = 0.0

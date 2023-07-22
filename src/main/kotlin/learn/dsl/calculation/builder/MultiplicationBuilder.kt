@@ -1,7 +1,9 @@
 package learn.dsl.calculation.builder
 
+import learn.dsl.calculation.CalculateDsl
 import learn.dsl.calculation.model.operation.Multiplication
 
+@CalculateDsl
 class MultiplicationBuilder {
 
     var factor1: Double = 0.0
