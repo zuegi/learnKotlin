@@ -1,6 +1,6 @@
 package learn.dsl.calculation.builder
 
-import learn.dsl.calculation.model.Addition
+import learn.dsl.calculation.model.operation.Addition
 
 class AdditionBuilder {
 

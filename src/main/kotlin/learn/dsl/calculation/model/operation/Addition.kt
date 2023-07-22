@@ -1,4 +1,4 @@
-package learn.dsl.calculation.model
+package learn.dsl.calculation.model.operation
 
 class Addition(
     private val summand1: Double,

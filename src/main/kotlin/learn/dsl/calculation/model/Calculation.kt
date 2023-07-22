@@ -1,5 +1,7 @@
 package learn.dsl.calculation.model
 
+import learn.dsl.calculation.model.operation.CalcOperation
+
 
 class Calculation(
     private val operations: List<CalcOperation>

@@ -1,4 +1,4 @@
-package learn.dsl.calculation.model
+package learn.dsl.calculation.model.operation
 
 class Multiplication(
    private val factor1: Double,

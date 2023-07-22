@@ -1,8 +1,7 @@
 package learn.dsl.calculation.model
 
 import learn.dsl.calculation.CalculateDsl
-import learn.dsl.calculation.builder.CalcOperationBuilder
-import learn.dsl.calculation.builder.CalculationBuilder
+import learn.dsl.calculation.model.operation.CalcOperation
 
 @CalculateDsl
 class CalcOperationList: ArrayList<CalcOperation>() {

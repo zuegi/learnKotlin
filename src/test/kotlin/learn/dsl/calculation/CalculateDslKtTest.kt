@@ -7,7 +7,20 @@ class CalculateDslKtTest {
 
 
     @Test
-    fun `should calclulate addtion and multiply result by x`() {
+    fun `should calculate addition of 2 numbers by values of operation `() {
+        val calculation = calculate {
+            operation {
+                addition {
+                    summand1 = 0.2
+                    summand2 = 0.3
+                }
+            }
+        }
+        assertThat(calculation.calculate()).isEqualTo(0.5)
+    }
+
+    @Test
+    fun `should calclulate addtion and multiply result by summe`() {
         val calculation = calculate {
             operation {
                 value1 = 0.2
