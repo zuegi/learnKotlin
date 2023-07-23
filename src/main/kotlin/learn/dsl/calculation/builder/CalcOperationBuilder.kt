@@ -6,28 +6,38 @@ import learn.dsl.calculation.model.operation.CalcOperation
 @CalculateDsl
 class CalcOperationBuilder {
 
-    var value1: Double = 0.0
-    var value2: Double = 0.0
-    lateinit var operation: CalcOperation
+    private lateinit var operation: CalcOperation
+    var result: Double? = null
 
 
     fun addition(block: AdditionBuilder.() -> Unit): Double {
-       operation = AdditionBuilder().apply(block).build()
-       return operation.calculate()
+        operation = AdditionBuilder(result).apply(block).build()
+        calculateResult()
+        return operation.calculate()
     }
 
-    fun multiplikation(block: MultiplicationBuilder.() -> Unit): Double {
-        operation = MultiplicationBuilder().apply(block).build()
+    private fun calculateResult() {
+        if (result == null) {
+           result = 0.0
+        }
+        result = result?.plus(operation.calculate())
+    }
+
+    fun multiplication(block: MultiplicationBuilder.() -> Unit): Double {
+        operation = MultiplicationBuilder(result).apply(block).build()
+        calculateResult()
         return operation.calculate()
     }
 
     fun division(block: DivisionBuilder.() -> Unit): Double {
-        operation = DivisionBuilder().apply(block).build()
+        operation = DivisionBuilder(result).apply(block).build()
+        calculateResult()
         return operation.calculate()
     }
 
     fun subtraction(block: SubtractionBuilder.() -> Unit): Double {
-        operation = SubtractionBuilder().apply(block).build()
+        operation = SubtractionBuilder(result).apply(block).build()
+        calculateResult()
         return operation.calculate()
     }
 

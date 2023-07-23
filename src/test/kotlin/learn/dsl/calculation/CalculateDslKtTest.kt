@@ -3,8 +3,37 @@ package learn.dsl.calculation
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CalculateDslKtTest {
+class CacculateDslKtTest {
 
+
+    @Test
+    fun `should calculate with no result so factor2 is set to default which is 0`() {
+        val calculation = calculate {
+            operation {
+                multiplication {
+                    factor1 = 0.3
+                }
+            }
+        }
+        assertThat(calculation.calculate()).isEqualTo(0.0)
+    }
+
+    @Test
+    fun `should calculate addition of 2 numbers and multiply `() {
+        val calculation = calculate {
+            operation {
+                addition {
+                    summand1 = 0.2
+                    summand2 = 0.3
+                }
+                multiplication {
+                    factor1 = 3.0
+                    factor2 = 2.0
+                }
+            }
+        }
+        assertThat(calculation.calculate()).isEqualTo(1.0)
+    }
 
     @Test
     fun `should calculate addition of 2 numbers by values of operation `() {
@@ -14,23 +43,24 @@ class CalculateDslKtTest {
                     summand1 = 0.2
                     summand2 = 0.3
                 }
+                // factor 1 is result of above addition
+                multiplication {
+                    factor2 = 2.0
+                }
             }
         }
-        assertThat(calculation.calculate()).isEqualTo(0.5)
+        assertThat(calculation.calculate()).isEqualTo(1.0)
     }
 
     @Test
     fun `should calclulate addtion and multiply result by summe`() {
         val calculation = calculate {
             operation {
-                value1 = 0.2
-                value2 = 0.3
                 val summe  = addition {
-                    summand1 = value1
-                    summand2 = value2
+                    summand1 =  0.2
+                    summand2 = 0.3
                 }
-                println(summe)
-                multiplikation {
+                multiplication {
                     factor1 = summe
                     factor2 = 2.0
                 }
@@ -43,11 +73,9 @@ class CalculateDslKtTest {
     fun `should calculate multiplication`() {
         val calculation = calculate {
             operation {
-                value1 = 2.0
-                value2 = 2.3
-                multiplikation {
-                   factor1 = value1
-                   factor2 = value2
+                multiplication {
+                   factor1 = 2.0
+                   factor2 = 2.3
                 }
             }
         }
@@ -60,11 +88,9 @@ class CalculateDslKtTest {
         val calculation = calculate {
 
             operation {
-                value1 = 0.1
-                value2 = 0.3
                 addition {
-                    summand1 = value1
-                    summand2 = value2
+                    summand1 = 0.1
+                    summand2 = 0.3
                 }
             }
 

@@ -8,11 +8,16 @@ import learn.dsl.calculation.model.operation.CalcOperation
 class CalculationBuilder {
 
 
-    var operations = mutableListOf<CalcOperation>()
+    private var operations = mutableListOf<CalcOperation>()
+    private var result: Double = 0.0
 
     fun build(): Calculation = Calculation(operations)
+
     fun operation(block: CalcOperationBuilder.() -> Unit) {
-        operations.add(CalcOperationBuilder().apply(block).build())
+        val calcOperation = CalcOperationBuilder().apply(block).build()
+        result += calcOperation.calculate()
+        operations.add(calcOperation)
+
     }
 
 }
