@@ -5,6 +5,21 @@ import org.junit.jupiter.api.Test
 
 class CacculateDslKtTest {
 
+    @Test
+    fun `should calculate addition and then subtract `() {
+        val calculation = calculate {
+            operation {
+                addition {
+                    summand1 = 0.2
+                    summand2 = 0.3
+                }
+                subtraction {
+                    subtrahend = 0.1
+                }
+            }
+        }
+        assertThat(calculation.calculate()).isEqualTo(0.4)
+    }
 
     @Test
     fun `should calculate with no result so factor2 is set to default which is 0`() {
