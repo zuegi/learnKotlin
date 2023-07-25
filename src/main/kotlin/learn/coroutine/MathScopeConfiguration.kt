@@ -12,7 +12,7 @@ class MathScopeConfiguration {
         var backgroundDispatcher: CoroutineDispatcher = Dispatchers.Default
         var ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 
-
+        var isDelayEnabled: Boolean = true
         var useTestTimeout: Boolean = false
     }
 }

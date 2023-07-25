@@ -75,7 +75,7 @@ class MathScopeCoroutinesHelperTest {
     }
 
     @Test
-    fun `should start job and async task which results in exception`() = runBlocking {
+    fun `should start job and async task  and results in exception`() = runBlocking {
 
         startJob(coroutineScope, coroutineScope.coroutineContext) {
 
