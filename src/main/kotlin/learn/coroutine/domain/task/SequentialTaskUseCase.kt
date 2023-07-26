@@ -26,6 +26,6 @@ class SequentialTaskUseCase(
 
         delayTask(taskDuration)
 
-        return@backgroundTask TaskExecutionSuccess(fetchedData)
+        return@backgroundTask TaskExecutionSuccess(fetchedData.toDouble())
     }
 }

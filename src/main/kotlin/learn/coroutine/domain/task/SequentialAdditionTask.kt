@@ -18,14 +18,9 @@ class SequentialAdditionTask : BaseTask() {
                     summand1 = bid
                     summand2 = ask
                 }
-                subtraction {
-                    subtrahend = 0.1
-                }
             }
         }
 
-        println("This is my calculation: ${calculation.calculate()}")
-
-        return@backgroundTask TaskExecutionSuccess(1000L)
+        return@backgroundTask TaskExecutionSuccess(calculation.calculate())
     }
 }

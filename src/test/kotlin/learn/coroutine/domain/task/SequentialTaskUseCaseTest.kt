@@ -30,7 +30,7 @@ class SequentialTaskUseCaseTest: AbstractBaseTaskTest() {
     fun execute_executesTask() {
         givenRemoteRepositoryWillReturn(100)
         whenExecuteWith(10, 20, 30)
-        thenResultIs(TaskExecutionSuccess(100))
+        thenResultIs(TaskExecutionSuccess(100.0))
     }
 
     // endregion Test
