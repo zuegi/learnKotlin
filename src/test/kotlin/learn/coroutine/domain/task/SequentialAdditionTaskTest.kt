@@ -33,6 +33,7 @@ class SequentialAdditionTaskTest : AbstractBaseTaskTest() {
         mainThreadSurrogate.close()
     }
 
+
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `should do anything`() = runTest {

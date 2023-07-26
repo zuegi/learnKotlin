@@ -1,9 +1,6 @@
 package learn.coroutine
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import learn.coroutine.MathScopeCoroutinesHelper.Companion.startJob
 import learn.coroutine.MathScopeCoroutinesHelper.Companion.startTask
 import learn.coroutine.MathScopeCoroutinesHelper.Companion.startTaskAsync
@@ -18,6 +15,10 @@ fun CoroutineScope.backgroundJob(timeout: Long = 0L, block: suspend CoroutineSco
 }
 
 fun CoroutineScope.ioJob(timeout: Long = 0L, block: suspend CoroutineScope.() -> Unit) {
+    startJob(this, MathScopeConfiguration.ioDispatcher, timeout, block)
+}
+
+suspend fun customJob(timeout: Long = 0L, block: suspend CoroutineScope.() -> Unit) = coroutineScope {
     startJob(this, MathScopeConfiguration.ioDispatcher, timeout, block)
 }
 
