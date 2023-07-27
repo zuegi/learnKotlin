@@ -19,8 +19,10 @@ fun CoroutineScope.ioJob(timeout: Long = 0L, block: suspend CoroutineScope.() ->
 }
 
 suspend fun customJob(timeout: Long = 0L, block: suspend CoroutineScope.() -> Unit) = coroutineScope {
-    startJob(this, MathScopeConfiguration.ioDispatcher, timeout, block)
+    startJob(this, MathScopeConfiguration.backgroundDispatcher, timeout, block)
 }
+
+
 
 suspend fun <T> uiTask(timeout: Long = 0L, block: suspend CoroutineScope.() -> T): T {
     return startTask(MathScopeConfiguration.uiDispatcher, timeout, block)

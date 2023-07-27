@@ -9,6 +9,27 @@ class MathScopeExtensionKtTest {
 
     private val trackedEvents = mutableListOf<String>()
 
+//    mache noch einen Test mit job wie mit dem fun <T> CoroutineScope.backgroundTaskAsync
+    @Test
+    fun `should start customJob with one backgroundTaskAsync`() = runBlocking {
+         customJob {
+            trackEvent("JOB_LAUNCHED")
+            backgroundTaskAsync {
+                trackEvent("ASYNC_TASK_LAUNCHED")
+                delay(500)
+                trackEvent("ASYNC_TASK_FINISHED")
+            }.start()
+            trackEvent("JOB_FINISHED")
+        }
+
+        assertThatEventsSequenceIs(
+            "JOB_LAUNCHED",
+            "JOB_FINISHED",
+            "ASYNC_TASK_LAUNCHED",
+            "ASYNC_TASK_FINISHED"
+        )
+    }
+
     @Test
     fun `should start customJob with one backgroundTask`() = runBlocking {
         customJob {
@@ -25,8 +46,6 @@ class MathScopeExtensionKtTest {
             "SYNC_TASK_LAUNCHED",
             "SYNC_TASK_FINISHED",
             "JOB_FINISHED"
-
-
         )
     }
 
