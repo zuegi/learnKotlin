@@ -49,6 +49,14 @@ class MathScopeExtensionKtTest {
         )
     }
 
+    @Test
+    fun `should start simple job`()  = runBlocking {
+        run {
+            customJob { }
+        }
+
+    }
+
 
     private fun trackEvent(event: String) {
         trackedEvents.add(event)

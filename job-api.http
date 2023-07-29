@@ -1,0 +1,19 @@
+# Post job
+POST http://localhost:8080/api/job/add
+Content-Type: application/json
+
+{
+  "name": "Mittelwert berechnen",
+  "taskDto": {
+    "name": "lies Sourcen"
+  }
+
+}
+
+###
+GET http://localhost:8080/api/job/list
+#Accept: application/json
+
+<> 2023-07-29T145243.404.json
+
+###
