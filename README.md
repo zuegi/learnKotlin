@@ -39,11 +39,47 @@ Jeder Task erhält seine Daten als Input übergeben und gibt als Output für den
 
 Source -> Processor -> Sink
 
-## Kombination von Kotlin Scripts und DSL
-Kotlin DSL sind immer interne DSL, welche in Programm Code verwendbar sind und der Vereinfachung von Domänen Logik dienen können.
+## Kombination von Kotlin Scripts und DSL = External DSL?
+Kotlin DSLs sind immer interne DSLs, welche in Programm Code verwendbar sind und der Vereinfachung von Domänen Logik dienen können.
 
 Mit der Kombination in Scripts könnte das eine Art externe DSL sein.
 
+### Maven dependencies
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-scripting-common</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-scripting-jvm</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-scripting-jvm-host</artifactId>
+    </dependency>
+</dependencies>
+```
+Und somit resultiert das folgende, über die [ExtDslMain.kt.main](src/main/kotlin/learn/script/ExtDslMain.kt) Routine ausgeführt File
+```kotlin
+val calculation = calculate {
+    operation {
+        addition {
+            summand1 = 0.2
+            summand2 = 0.3
+        }
+        subtraction {
+            subtrahend = 0.1
+        }
+    }
+}
+println("Caclulated: ${calculation.calculate()}")
+```
+in
+```text
+Caclulated: 0.4
+```
 
 ## Verwendung von DSLs
 * Man könnte für das OneApi eine DSL schreiben, welche das Erstellen und so kapselt !!!!!!
