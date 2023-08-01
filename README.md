@@ -39,7 +39,15 @@ Jeder Task erhält seine Daten als Input übergeben und gibt als Output für den
 
 Source -> Processor -> Sink
 
+## Kombination von Kotlin Scripts und DSL
+Kotlin DSL sind immer interne DSL, welche in Programm Code verwendbar sind und der Vereinfachung von Domänen Logik dienen können.
 
+Mit der Kombination in Scripts könnte das eine Art externe DSL sein.
+
+
+## Verwendung von DSLs
+* Man könnte für das OneApi eine DSL schreiben, welche das Erstellen und so kapselt !!!!!!
+* 
 
 ## package learn.actors
 Building Kotlin data pipelines
@@ -62,13 +70,14 @@ job {
 
 
 ## package learn.dsl
-
+tbd
 
 
 # Reference 
 * [A small DSL for Android apps development](https://medium.com/kinandcartacreated/kotlin-coroutines-in-android-part-7-65f65f85824d )
 * [Easy JSON in Kotlin with a Type-Safe Builder DSL](https://blog.devgenius.io/writing-a-dsl-in-kotlin-42a9029b93a6)
 * https://kpavlov.me/blog/building-kotlin-data-pipelines/
+* [Combining scripts and DSLs is Kotlin’s most underrated feature](https://scastiel.dev/kotlin-scripts-dsl-underrated-feature)
 
 ### Reference Documentation
   For further reference, please consider the following sections:
