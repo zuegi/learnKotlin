@@ -44,6 +44,9 @@ Kotlin DSLs sind immer interne DSLs, welche in Programm Code verwendbar sind und
 
 Mit der Kombination in Scripts könnte das eine Art externe DSL sein.
 
+
+> **_NOTE:_** !!!! Kotlin scripting is Experimental. It may be dropped or changed at any time. Use it only for evaluation purposes !!!!
+
 ### Maven dependencies
 ```xml
 <dependencies>
