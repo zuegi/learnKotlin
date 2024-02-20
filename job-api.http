@@ -1,5 +1,5 @@
 # Post job
-POST http://localhost:8080/api/job/add
+POST http://localhost:8090/api/job/add
 Content-Type: application/json
 
 {
