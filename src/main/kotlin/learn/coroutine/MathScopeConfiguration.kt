@@ -4,7 +4,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 class MathScopeConfiguration {
-
     companion object {
         const val TEST_TIMEOUT: Long = 500L
 

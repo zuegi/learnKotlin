@@ -120,6 +120,8 @@ class TreeNodeTest {
                 section("FMD0 Berechnungsdefinition") { }
             }
 
+        // https://kotlinlang.org/docs/type-safe-builders.html
+
         rootNode
             .node("FX Instrument") {
                 berechnungsdefinition(rootBerechnungsdefinition) {

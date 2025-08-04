@@ -5,5 +5,5 @@ enum class TaskExecutionState {
     RUNNING,
     COMPLETED,
     CANCELLED,
-    ERROR
+    ERROR,
 }

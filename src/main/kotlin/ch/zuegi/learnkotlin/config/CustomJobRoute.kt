@@ -7,13 +7,14 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.server.coRouter
 
 @Configuration
-class CustomJobRoute(private val jobHandler: JobHandler) {
-
+class CustomJobRoute(
+    private val jobHandler: JobHandler,
+) {
     @FlowPreview
     @Bean
-    fun jobRoute() = coRouter {
-        GET("/api/job/list", jobHandler::listJobs)
-        POST("/api/job/add", jobHandler::addJob)
-    }
-
+    fun jobRoute() =
+        coRouter {
+            GET("/api/job/list", jobHandler::listJobs)
+            POST("/api/job/add", jobHandler::addJob)
+        }
 }

@@ -15,6 +15,7 @@ class Berechnungsdefinition(
     ): Berechnungsdefinition {
         val berechnungsdefinition = Berechnungsdefinition(name, true).apply(children)
         this.children.addLast(berechnungsdefinition)
+        berechnungsdefinition.children()
         return berechnungsdefinition
     }
 
@@ -22,8 +23,8 @@ class Berechnungsdefinition(
         codedefinition: Codedefinition,
         children: Codedefinition.() -> Unit,
     ): Berechnungsdefinition {
-        println("hallo")
         this.codedefinition = codedefinition.apply(children)
+        codedefinition.children()
         return this
     }
 
@@ -32,6 +33,7 @@ class Berechnungsdefinition(
         children: Attributedefinition.() -> Unit,
     ): Berechnungsdefinition {
         val ad = Attributedefinition(name).apply(children)
+        ad.children()
         this.attributedefinition = ad
         return this
     }
@@ -40,6 +42,4 @@ class Berechnungsdefinition(
 fun rootBerechnungsdefinition(
     name: String,
     children: Berechnungsdefinition.() -> Unit,
-): Berechnungsdefinition {
-    return Berechnungsdefinition(name).apply(children)
-}
+): Berechnungsdefinition = Berechnungsdefinition(name).apply(children)

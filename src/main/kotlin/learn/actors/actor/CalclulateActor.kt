@@ -20,21 +20,19 @@ fun CoroutineScope.calculateActor(inbox: ReceiveChannel<ActorsMessage<RawData>>)
         onCompletion = {
             context.close() // close context on stopping the actor
             log("🛑 Completed. Exception: $it")
-        }
-    )
-    {
+        },
+    ) {
         for (msg in inbox) { // iterate over incoming messages
             log("🥁 Processing $msg")
             val result = transformMessage(msg) { calculate(msg.payload) }
             log("🥁 Calculated $result")
             channel.send(result) // send to next
         }
-
     }
+
 private fun calculate(rawData: RawData): RichData {
     val bid = rawData.bid
     val ask = rawData.ask
     val mid = (bid + ask) / 2
     return RichData(bid, ask, mid)
 }
-

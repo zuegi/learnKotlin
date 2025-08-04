@@ -3,6 +3,7 @@ package ch.raiffeisen.financialdatacenter.runtime.node
 class TreeNode(
     val name: String,
 ) {
+    val dslChildren = mutableListOf<Any>()
     val children = mutableListOf<TreeNode>()
     var parent: TreeNode? = null
     var berechnungsdefinition: Berechnungsdefinition? = null
@@ -15,6 +16,7 @@ class TreeNode(
     ): TreeNode {
         val node = TreeNode(name).apply(children)
         this.children.addLast(node)
+        node.children()
         return node
     }
 
@@ -45,6 +47,7 @@ class TreeNode(
         children: Berechnungsdefinition.() -> Unit,
     ): Berechnungsdefinition {
         this.berechnungsdefinition = berechnungsdefinition.apply(children)
+        berechnungsdefinition.children()
         return berechnungsdefinition
     }
 
@@ -53,6 +56,7 @@ class TreeNode(
         children: Codedefinition.() -> Unit,
     ): TreeNode {
         val cd = Codedefinition(name).apply(children)
+        cd.children()
         this.codedefinition = cd
         return this
     }
@@ -71,7 +75,14 @@ class TreeNode(
         stringBuilder.append(prefix)
         val bdAppend = if (berechnungsdefinition != null) "*-> ${berechnungsdefinition?.name}" else ""
         val codedefinitionAppend = if (codedefinition != null) "<- ${codedefinition?.name}" else ""
-        val attributedefinitionAppend = if (berechnungsdefinition?.attributedefinition != null) "-> Attributes:${berechnungsdefinition?.attributedefinition?.attributes?.map { it.name }}" else ""
+        val attributedefinitionAppend =
+            if (berechnungsdefinition?.attributedefinition !=
+                null
+            ) {
+                "-> Attributes:${berechnungsdefinition?.attributedefinition?.attributes?.map { it.name }}"
+            } else {
+                ""
+            }
         stringBuilder.append("$name $bdAppend $codedefinitionAppend $attributedefinitionAppend")
         stringBuilder.append('\n')
         val childIterator = children.iterator()
@@ -106,7 +117,9 @@ class TreeNode(
  * Output: 1 2 3 4 5 6 7 8 9 10 11 12 13
  * ```
  */
-class LevelOrderTreeIterator(root: TreeNode) : Iterator<TreeNode> {
+class LevelOrderTreeIterator(
+    root: TreeNode,
+) : Iterator<TreeNode> {
     private val stack = ArrayDeque<TreeNode>()
 
     init {
@@ -126,6 +139,4 @@ class LevelOrderTreeIterator(root: TreeNode) : Iterator<TreeNode> {
 fun rootNode(
     name: String,
     children: TreeNode.() -> Unit,
-): TreeNode {
-    return TreeNode(name).apply(children)
-}
+): TreeNode = TreeNode(name).apply(children)

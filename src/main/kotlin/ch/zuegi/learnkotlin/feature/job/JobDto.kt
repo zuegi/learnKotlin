@@ -5,9 +5,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class JobDto(
     val name: String,
-    val taskDto: CustomTaskDto
+    val taskDto: CustomTaskDto,
 )
 
 @Serializable
-data class CustomTaskDto(val name: String)
-
+data class CustomTaskDto(
+    val name: String,
+)

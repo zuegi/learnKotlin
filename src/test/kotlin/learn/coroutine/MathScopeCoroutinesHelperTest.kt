@@ -10,7 +10,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class MathScopeCoroutinesHelperTest {
-    private class TestException(message: String) : Exception(message)
+    private class TestException(
+        message: String,
+    ) : Exception(message)
 
     private val trackedEvents = mutableListOf<String>()
     private lateinit var job: Job
@@ -20,16 +22,14 @@ class MathScopeCoroutinesHelperTest {
     @BeforeEach
     fun before() {
         job = Job()
-        coroutineScope = CoroutineScope(job+ Dispatchers.Default)
+        coroutineScope = CoroutineScope(job + Dispatchers.Default)
         trackedEvents.clear()
     }
-
 
     @Test
     fun `should start job and sync task`() {
         // given
         startJob(coroutineScope, coroutineScope.coroutineContext) {
-
             trackEvent("JOB_START")
 
             startTask(coroutineContext) {
@@ -51,14 +51,13 @@ class MathScopeCoroutinesHelperTest {
             "JOB_START",
             "SYNC_TASK_START",
             "SYNC_TASK_END",
-            "JOB_END"
+            "JOB_END",
         )
     }
 
     @Test
     fun `should start void job and track start stop`() {
         startJob(coroutineScope, coroutineScope.coroutineContext) {
-
             trackEvent("JOB_START")
             delay(100)
             trackEvent("JOB_END")
@@ -70,42 +69,41 @@ class MathScopeCoroutinesHelperTest {
 
         assertThatEventsSequenceIs(
             "JOB_START",
-            "JOB_END"
+            "JOB_END",
         )
     }
 
     @Test
-    fun `should start job and async task  and results in exception`() = runBlocking {
+    fun `should start job and async task  and results in exception`() =
+        runBlocking {
+            startJob(coroutineScope, coroutineScope.coroutineContext) {
+                trackEvent("JOB_START")
 
-        startJob(coroutineScope, coroutineScope.coroutineContext) {
+                val deferred1 =
+                    startTaskAsync(this, Dispatchers.Default) {
+                        delay(100)
+                        trackEvent("TASK1_START")
+                        delay(1000)
+                        throw TestException("TASK1_EXCEPTION")
+                    }
 
-            trackEvent("JOB_START")
-
-            val deferred1 = startTaskAsync(this, Dispatchers.Default) {
-                delay(100)
-                trackEvent("TASK1_START")
-                delay(1000)
-                throw TestException("TASK1_EXCEPTION")
+                try {
+                    awaitAllOrCancel(deferred1)
+                } catch (e: TestException) {
+                    trackEvent(e.message!!)
+                }
+                trackEvent("JOB_END")
             }
 
-            try {
-                awaitAllOrCancel(deferred1)
-            } catch (e: TestException) {
-                trackEvent(e.message!!)
-            }
-            trackEvent("JOB_END")
+            job.children.forEach { it.join() }
+
+            assertThatEventsSequenceIs(
+                "JOB_START",
+                "TASK1_START",
+                "TASK1_EXCEPTION",
+                "JOB_END",
+            )
         }
-
-        job.children.forEach { it.join() }
-
-        assertThatEventsSequenceIs(
-            "JOB_START",
-            "TASK1_START",
-            "TASK1_EXCEPTION",
-            "JOB_END"
-        )
-    }
-
 
     private fun trackEvent(event: String) {
         trackedEvents.add(event)
@@ -114,5 +112,4 @@ class MathScopeCoroutinesHelperTest {
     private fun assertThatEventsSequenceIs(vararg expectedEventsSequence: String) {
         Assertions.assertThat(trackedEvents).isEqualTo(expectedEventsSequence.asList())
     }
-
 }

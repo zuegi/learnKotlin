@@ -12,7 +12,6 @@ import org.springframework.web.reactive.function.server.bodyValueAndAwait
 
 @Component
 class JobHandler {
-
     private val log by logger()
 
     suspend fun addJob(req: ServerRequest): ServerResponse {
@@ -34,7 +33,5 @@ class JobHandler {
         return ServerResponse.ok().bodyValueAndAwait("Job added")
     }
 
-    suspend fun listJobs(req: ServerRequest):ServerResponse {
-        return ServerResponse.ok().bodyValueAndAwait("Jobs listed")
-    }
+    suspend fun listJobs(req: ServerRequest): ServerResponse = ServerResponse.ok().bodyValueAndAwait("Jobs listed")
 }

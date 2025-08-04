@@ -6,47 +6,63 @@ import learn.coroutine.MathScopeCoroutinesHelper.Companion.startTask
 import learn.coroutine.MathScopeCoroutinesHelper.Companion.startTaskAsync
 import kotlin.coroutines.cancellation.CancellationException
 
-fun CoroutineScope.uiJob(timeout: Long = 0L, block: suspend CoroutineScope.() -> Unit) {
+fun CoroutineScope.uiJob(
+    timeout: Long = 0L,
+    block: suspend CoroutineScope.() -> Unit,
+) {
     startJob(this, MathScopeConfiguration.uiDispatcher, timeout, block)
 }
 
-fun CoroutineScope.backgroundJob(timeout: Long = 0L, block: suspend CoroutineScope.() -> Unit) {
+fun CoroutineScope.backgroundJob(
+    timeout: Long = 0L,
+    block: suspend CoroutineScope.() -> Unit,
+) {
     startJob(this, MathScopeConfiguration.backgroundDispatcher, timeout, block)
 }
 
-fun CoroutineScope.ioJob(timeout: Long = 0L, block: suspend CoroutineScope.() -> Unit) {
+fun CoroutineScope.ioJob(
+    timeout: Long = 0L,
+    block: suspend CoroutineScope.() -> Unit,
+) {
     startJob(this, MathScopeConfiguration.ioDispatcher, timeout, block)
 }
 
-suspend fun customJob(timeout: Long = 0L, block: suspend CoroutineScope.() -> Unit) = coroutineScope {
+suspend fun customJob(
+    timeout: Long = 0L,
+    block: suspend CoroutineScope.() -> Unit,
+) = coroutineScope {
     startJob(this, MathScopeConfiguration.backgroundDispatcher, timeout, block)
 }
 
+suspend fun <T> uiTask(
+    timeout: Long = 0L,
+    block: suspend CoroutineScope.() -> T,
+): T = startTask(MathScopeConfiguration.uiDispatcher, timeout, block)
 
+suspend fun <T> backgroundTask(
+    timeout: Long = 0L,
+    block: suspend CoroutineScope.() -> T,
+): T = startTask(MathScopeConfiguration.backgroundDispatcher, timeout, block)
 
-suspend fun <T> uiTask(timeout: Long = 0L, block: suspend CoroutineScope.() -> T): T {
-    return startTask(MathScopeConfiguration.uiDispatcher, timeout, block)
-}
+suspend fun <T> ioTask(
+    timeout: Long = 0L,
+    block: suspend CoroutineScope.() -> T,
+): T = startTask(MathScopeConfiguration.ioDispatcher, timeout, block)
 
-suspend fun <T> backgroundTask(timeout: Long = 0L, block: suspend CoroutineScope.() -> T): T {
-    return startTask(MathScopeConfiguration.backgroundDispatcher, timeout, block)
-}
+fun <T> CoroutineScope.uiTaskAsync(
+    timeout: Long = 0L,
+    block: suspend CoroutineScope.() -> T,
+): Deferred<T> = startTaskAsync(this, MathScopeConfiguration.uiDispatcher, timeout, block)
 
-suspend fun <T> ioTask(timeout: Long = 0L, block: suspend CoroutineScope.() -> T): T {
-    return startTask(MathScopeConfiguration.ioDispatcher, timeout, block)
-}
+fun <T> CoroutineScope.backgroundTaskAsync(
+    timeout: Long = 0L,
+    block: suspend CoroutineScope.() -> T,
+): Deferred<T> = startTaskAsync(this, MathScopeConfiguration.backgroundDispatcher, timeout, block)
 
-fun <T> CoroutineScope.uiTaskAsync(timeout: Long = 0L, block: suspend CoroutineScope.() -> T): Deferred<T> {
-    return startTaskAsync(this, MathScopeConfiguration.uiDispatcher, timeout, block)
-}
-
-fun <T> CoroutineScope.backgroundTaskAsync(timeout: Long = 0L, block: suspend CoroutineScope.() -> T): Deferred<T> {
-    return startTaskAsync(this, MathScopeConfiguration.backgroundDispatcher, timeout, block)
-}
-
-fun <T> CoroutineScope.ioTaskAsync(timeout: Long = 0L, block: suspend CoroutineScope.() -> T): Deferred<T> {
-    return startTaskAsync(this, MathScopeConfiguration.ioDispatcher, timeout, block)
-}
+fun <T> CoroutineScope.ioTaskAsync(
+    timeout: Long = 0L,
+    block: suspend CoroutineScope.() -> T,
+): Deferred<T> = startTaskAsync(this, MathScopeConfiguration.ioDispatcher, timeout, block)
 
 suspend fun delayTask(milliseconds: Long) {
     if (MathScopeConfiguration.isDelayEnabled) {
@@ -54,15 +70,12 @@ suspend fun delayTask(milliseconds: Long) {
     }
 }
 
-suspend fun <T> Deferred<T>.awaitOrReturn(returnIfCancelled: T): T {
-    return try {
+suspend fun <T> Deferred<T>.awaitOrReturn(returnIfCancelled: T): T =
+    try {
         await()
     } catch (e: CancellationException) {
         returnIfCancelled
     }
-}
-
-
 
 suspend fun <T> awaitAllOrCancel(vararg deferreds: Deferred<T>): List<T> {
     try {
